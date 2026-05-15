@@ -752,14 +752,6 @@
     let visitorName = sessionStorage.getItem("v_name") || "";
     sessionStorage.setItem("v_id", visitorId);
 
-    async function cleanOld() {
-      const cutoff = Date.now() - 24*60*60*1000;
-      const snap = await get(ref(db,"chats"));
-      if (!snap.exists()) return;
-      snap.forEach(t => t.forEach(m => { if(m.val().ts && m.val().ts < cutoff) remove(m.ref); }));
-    }
-    cleanOld();
-
     function appendMsg(container, text, side) {
       const w = document.createElement("div");
       w.className = `msg-wrap ${side}`;
